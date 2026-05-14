@@ -1,0 +1,48 @@
+/* Curiosity Cabinet — design tokens
+ *
+ * Source of truth for the locked visual language. Tailwind v4 reads the
+ * @theme block in globals.css and generates utility classes from these.
+ * Any additional raw variables live here so non-Tailwind CSS can also
+ * reference them (e.g. inline styles, SVG fills, gradient stops).
+ */
+
+:root {
+  /* Palette — never pure white, pure black, or saturated primaries */
+  --cc-cream: #faf3e7;
+  --cc-offwhite: #fffcf5;
+  --cc-navy: #2a3b4d;
+  --cc-charcoal: #3a3a3a;
+  --cc-warm-gray: #9c8e7e;
+  --cc-terracotta: #d97757;
+  --cc-mustard: #e8b04b;
+  --cc-sage: #8aa678;
+  --cc-dusty-blue: #6b8cae;
+  --cc-soft-pink: #e8b4b8;
+
+  /* Semantic */
+  --cc-bg: var(--cc-cream);
+  --cc-surface: var(--cc-offwhite);
+  --cc-ink: var(--cc-navy);
+  --cc-muted: var(--cc-warm-gray);
+
+  /* Outline rule: 2-3px navy, rounded ends */
+  --cc-stroke: 2.5px;
+
+  /* ---- Layout knobs ----
+   * Change these to retune cosmetics across every page at once.
+   * Section gap = vertical space between item-page sections.
+   * Page max-width = where the content stops growing on wide screens.
+   * Hero size = circular hero illustration diameter on item pages.
+   * Card radius = rounded corner used by panels and cards. */
+  --cc-page-max: 44rem;
+  --cc-section-gap: 4rem;
+  --cc-section-gap-sm: 2.5rem;
+  --cc-hero-size: 14rem;
+  --cc-hero-size-md: 18rem;
+  --cc-card-radius: 1.25rem;
+  --cc-card-padding: 1.5rem;
+
+  /* Paper grain — subtle SVG noise overlay at ~8% opacity.
+   * Inline so we don't ship an asset just for this. */
+  --cc-paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.23  0 0 0 0 0.30  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
