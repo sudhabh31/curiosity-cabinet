@@ -1,20 +1,23 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
-/* Tailwind v4 theme — exposes palette + fonts as utility classes.
- * e.g. bg-cream, text-navy, font-display, font-body.
+/* Tailwind v4 theme — exposes the palette + fonts as utility classes.
+ * Each color resolves to a CSS variable defined in styles/tokens.css,
+ * which swaps under @media (prefers-color-scheme: dark). So utilities
+ * like bg-cream and text-navy automatically retheme — no class renames
+ * needed across components.
  */
 @theme {
-  --color-cream: #faf3e7;
-  --color-offwhite: #fffcf5;
-  --color-navy: #2a3b4d;
-  --color-charcoal: #3a3a3a;
-  --color-warm-gray: #9c8e7e;
-  --color-terracotta: #d97757;
-  --color-mustard: #e8b04b;
-  --color-sage: #8aa678;
-  --color-dusty-blue: #6b8cae;
-  --color-soft-pink: #e8b4b8;
+  --color-cream: var(--color-cream);
+  --color-offwhite: var(--color-offwhite);
+  --color-navy: var(--color-navy);
+  --color-charcoal: var(--color-charcoal);
+  --color-warm-gray: var(--color-warm-gray);
+  --color-terracotta: var(--color-terracotta);
+  --color-mustard: var(--color-mustard);
+  --color-sage: var(--color-sage);
+  --color-dusty-blue: var(--color-dusty-blue);
+  --color-soft-pink: var(--color-soft-pink);
 
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-body: var(--font-nunito), system-ui, -apple-system, sans-serif;
@@ -26,16 +29,16 @@
 
 html,
 body {
-  background: var(--cc-bg);
-  color: var(--cc-ink);
+  background: var(--color-cream);
+  color: var(--color-navy);
 }
 
 body {
   font-family: var(--font-body);
-  /* Paper grain — subtle, premium feel. ~8% opacity blended in. */
   position: relative;
 }
 
+/* Paper grain — subtle, premium feel. Values swap with the theme. */
 body::before {
   content: "";
   position: fixed;
@@ -44,8 +47,8 @@ body::before {
   z-index: 1;
   background-image: var(--cc-paper-grain);
   background-repeat: repeat;
-  opacity: 0.08;
-  mix-blend-mode: multiply;
+  opacity: var(--cc-paper-grain-opacity);
+  mix-blend-mode: var(--cc-paper-grain-blend);
 }
 
 /* Display type — used sparingly on hero/scene/page titles */
@@ -59,8 +62,8 @@ h3 {
 
 /* Selection — warm, not jarring */
 ::selection {
-  background: var(--cc-mustard);
-  color: var(--cc-navy);
+  background: var(--color-mustard);
+  color: var(--color-cream);
 }
 
 /* Reduced motion — respect the parent setting */
@@ -71,4 +74,16 @@ h3 {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ---- Hidden global SVG defs ----
+ * Filters referenced by inline SVG illustrations. Defined once here so
+ * every Frame doesn't ship its own copy. Updated only via this file.
+ */
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
 }

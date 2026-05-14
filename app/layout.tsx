@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito } from "next/font/google";
 import { CabinetBadge } from "@/components/CabinetBadge";
+import { SvgFilters } from "@/components/SvgFilters";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAF3E7",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F0EDE6" },
+    { media: "(prefers-color-scheme: dark)", color: "#1B2433" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -40,6 +44,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${nunito.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <SvgFilters />
         {children}
         <CabinetBadge />
       </body>

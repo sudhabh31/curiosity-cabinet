@@ -72,6 +72,22 @@ export const banana: Item = {
     fact: "Almost every banana you eat is a clone — genetically identical to one plant from the 1830s. That's why every Cavendish tastes the same.",
   },
 
+  sources: [
+    {
+      title: "Banana — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Banana",
+    },
+    {
+      title: "Cavendish banana — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Cavendish_banana",
+      note: "The clone you almost certainly ate this week.",
+    },
+    {
+      title: "Banana production — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Banana_production",
+    },
+  ],
+
   quizContributions: [
     {
       type: "flow-scramble",

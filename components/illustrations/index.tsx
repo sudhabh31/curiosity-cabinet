@@ -16,6 +16,13 @@ import { MilkBottleHero, MilkStepIllustration } from "./milk";
 import { BreadLoafHero, BreadStepIllustration } from "./bread";
 import { HoneyJarHero, HoneyStepIllustration } from "./honey";
 import { BananaBunchHero, BananaStepIllustration } from "./banana";
+import { TeacupHero, TeaStepIllustration } from "./tea";
+import { YogurtPotHero, YogurtStepIllustration } from "./yogurt";
+import { ButterBlockHero, ButterStepIllustration } from "./butter";
+import { EggHero, EggsStepIllustration } from "./eggs";
+import { JamJarHero, JamStepIllustration } from "./jam";
+import { OrangeJuiceHero, OrangeJuiceStepIllustration } from "./orange-juice";
+import { CerealBowlHero, CerealStepIllustration } from "./cereal";
 
 interface CommonProps {
   size?: number;
@@ -39,6 +46,20 @@ export function getHeroIllustration(
       return <HoneyJarHero {...props} />;
     case "banana":
       return <BananaBunchHero {...props} />;
+    case "tea":
+      return <TeacupHero {...props} />;
+    case "yogurt":
+      return <YogurtPotHero {...props} />;
+    case "butter":
+      return <ButterBlockHero {...props} />;
+    case "eggs":
+      return <EggHero {...props} />;
+    case "jam":
+      return <JamJarHero {...props} />;
+    case "orange-juice":
+      return <OrangeJuiceHero {...props} />;
+    case "cereal":
+      return <CerealBowlHero {...props} />;
     default:
       return null;
   }
@@ -61,6 +82,20 @@ export function getStepIllustration(
       return <HoneyStepIllustration stepId={stepId} {...props} />;
     case "banana":
       return <BananaStepIllustration stepId={stepId} {...props} />;
+    case "tea":
+      return <TeaStepIllustration stepId={stepId} {...props} />;
+    case "yogurt":
+      return <YogurtStepIllustration stepId={stepId} {...props} />;
+    case "butter":
+      return <ButterStepIllustration stepId={stepId} {...props} />;
+    case "eggs":
+      return <EggsStepIllustration stepId={stepId} {...props} />;
+    case "jam":
+      return <JamStepIllustration stepId={stepId} {...props} />;
+    case "orange-juice":
+      return <OrangeJuiceStepIllustration stepId={stepId} {...props} />;
+    case "cereal":
+      return <CerealStepIllustration stepId={stepId} {...props} />;
     default:
       return null;
   }

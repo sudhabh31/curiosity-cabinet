@@ -71,6 +71,22 @@ export const honey: Item = {
     fact: "Honey is the only food that genuinely never spoils. Archaeologists have found edible honey in 3,000-year-old Egyptian tombs.",
   },
 
+  sources: [
+    {
+      title: "Honey — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Honey",
+    },
+    {
+      title: "Honey bee — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Honey_bee",
+    },
+    {
+      title: "Beekeeping — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Beekeeping",
+      note: "How humans have kept bees for thousands of years.",
+    },
+  ],
+
   quizContributions: [
     {
       type: "flow-scramble",

@@ -72,6 +72,22 @@ export const milk: Item = {
     fact: "A cow produces around 25 litres of milk a day — about 100 glasses. That's why one cow can feed a lot of people.",
   },
 
+  sources: [
+    {
+      title: "Milk — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Milk",
+    },
+    {
+      title: "Pasteurization — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Pasteurization",
+      note: "Louis Pasteur and the heat trick.",
+    },
+    {
+      title: "Dairy farming — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Dairy_farming",
+    },
+  ],
+
   quizContributions: [
     {
       type: "flow-scramble",

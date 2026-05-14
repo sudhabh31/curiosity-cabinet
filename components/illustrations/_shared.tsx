@@ -26,13 +26,21 @@ export interface SvgProps {
   title?: string;
 }
 
-/** Common SVG wrapper — 100x100 viewBox, navy-stroked root group. */
+/** Common SVG wrapper — 100x100 viewBox, navy-stroked root group.
+ *
+ * Applies the global #handdrawn filter (defined in components/SvgFilters
+ * and mounted by the root layout) so strokes get a subtle non-uniform
+ * displacement — closer to a child's-book page than perfectly
+ * geometric vector. Pass `crisp` to opt an individual illustration out
+ * if the jitter eats too much fine detail.
+ */
 export function Frame({
   size,
   className,
   title,
+  crisp,
   children,
-}: SvgProps & { children: ReactNode }) {
+}: SvgProps & { crisp?: boolean; children: ReactNode }) {
   return (
     <svg
       viewBox="0 0 100 100"
@@ -49,6 +57,7 @@ export function Frame({
         strokeLinejoin="round"
         strokeLinecap="round"
         fill="none"
+        filter={crisp ? undefined : "url(#handdrawn)"}
       >
         {children}
       </g>

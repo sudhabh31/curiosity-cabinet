@@ -91,6 +91,24 @@ export const chocolate: Item = {
     fact: "Cocoa trees grow their flowers and pods right out of the trunk and main branches — most fruit trees keep their fruit on the twigs.",
   },
 
+  sources: [
+    {
+      title: "Chocolate — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Chocolate",
+      note: "Overview, processing, and types.",
+    },
+    {
+      title: "History of chocolate — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/History_of_chocolate",
+      note: "From the Olmec to the modern bar.",
+    },
+    {
+      title: "Theobroma cacao — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Theobroma_cacao",
+      note: "The cocoa tree itself.",
+    },
+  ],
+
   quizContributions: [
     {
       type: "flow-scramble",

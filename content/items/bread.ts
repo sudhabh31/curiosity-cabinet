@@ -72,6 +72,23 @@ export const bread: Item = {
     fact: "The hole-y look inside bread is made by trapped carbon dioxide — gas that yeast breathed out while the dough was rising.",
   },
 
+  sources: [
+    {
+      title: "Bread — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Bread",
+    },
+    {
+      title: "History of bread — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/History_of_bread",
+      note: "14,000 years of loaves.",
+    },
+    {
+      title: "Yeast — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Yeast",
+      note: "The microscopic creature doing the work.",
+    },
+  ],
+
   quizContributions: [
     {
       type: "flow-scramble",

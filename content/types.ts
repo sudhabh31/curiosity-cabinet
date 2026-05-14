@@ -121,6 +121,19 @@ export interface MysteryItemQuestion {
   distractors: readonly Slug[];
 }
 
+/* ---------- Sources ---------- */
+
+/**
+ * A reference for the curious / sceptical adult. Rendered at the bottom
+ * of each item page so parents can fact-check and dive deeper.
+ */
+export interface Source {
+  title: string;
+  url: string;
+  /** Optional one-line note about why the link is here. */
+  note?: string;
+}
+
 /* ---------- Item ---------- */
 
 /** Everything needed to render an item page and contribute to quizzes. */
@@ -146,6 +159,9 @@ export interface Item {
 
   /** 2–3 questions per item per the brief. */
   quizContributions: readonly QuizQuestion[];
+
+  /** Optional further-reading links. Shown at the bottom of the item page. */
+  sources?: readonly Source[];
 }
 
 /* ---------- Scene ---------- */

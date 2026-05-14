@@ -18,53 +18,19 @@
  * `illustration` on the item. The components prefer the real asset.
  */
 
-import type { ComponentType, ReactNode } from "react";
-
-/* ---- Palette aliases (kept local so each SVG is self-contained) ---- */
-const NAVY = "#2A3B4D";
-const OFFWHITE = "#FFFCF5";
-const TERRACOTTA = "#D97757";
-const MUSTARD = "#E8B04B";
-const SAGE = "#8AA678";
-const DUSTY_BLUE = "#6B8CAE";
-const SOFT_PINK = "#E8B4B8";
-const WARM_GRAY = "#9C8E7E";
-
-interface SvgProps {
-  size?: number;
-  className?: string;
-  title?: string;
-}
-
-/** Common wrapper — 100x100 viewBox, navy stroke defaults. */
-function Frame({
-  size,
-  className,
-  title,
-  children,
-}: SvgProps & { children: ReactNode }) {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      width={size ?? "100%"}
-      height={size ?? "100%"}
-      className={className}
-      role={title ? "img" : "presentation"}
-      aria-label={title}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g
-        stroke={NAVY}
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-        fill="none"
-      >
-        {children}
-      </g>
-    </svg>
-  );
-}
+import type { ComponentType } from "react";
+import {
+  Frame,
+  NAVY,
+  OFFWHITE,
+  TERRACOTTA,
+  MUSTARD,
+  SAGE,
+  DUSTY_BLUE,
+  SOFT_PINK,
+  WARM_GRAY,
+  type SvgProps,
+} from "./_shared";
 
 /* ---- Hero: a single ripe cocoa pod with a leaf ---- */
 

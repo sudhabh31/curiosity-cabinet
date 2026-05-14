@@ -4,8 +4,6 @@
  * Each item lives in its own file (e.g. content/items/chocolate.ts) and
  * is registered here. Pages read from this registry rather than scanning
  * the filesystem so we get full type-checking and deterministic builds.
- *
- * Items are added in subsequent stories. The registry starts empty.
  */
 
 import type { Item, Slug } from "@/content/types";
@@ -14,6 +12,13 @@ import { milk } from "./milk";
 import { bread } from "./bread";
 import { honey } from "./honey";
 import { banana } from "./banana";
+import { tea } from "./tea";
+import { yogurt } from "./yogurt";
+import { butter } from "./butter";
+import { eggs } from "./eggs";
+import { jam } from "./jam";
+import { orangeJuice } from "./orange-juice";
+import { cereal } from "./cereal";
 
 export const items: readonly Item[] = [
   chocolate,
@@ -21,6 +26,13 @@ export const items: readonly Item[] = [
   bread,
   honey,
   banana,
+  tea,
+  yogurt,
+  butter,
+  eggs,
+  jam,
+  orangeJuice,
+  cereal,
 ] as const;
 
 /** Slug → Item lookup. O(1) at runtime, built once at module load. */

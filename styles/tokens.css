@@ -1,39 +1,44 @@
 /* Curiosity Cabinet — design tokens
  *
  * Source of truth for the locked visual language. Tailwind v4 reads the
- * @theme block in globals.css and generates utility classes from these.
- * Any additional raw variables live here so non-Tailwind CSS can also
- * reference them (e.g. inline styles, SVG fills, gradient stops).
+ * @theme block in globals.css and generates utility classes from these
+ * CSS variables, so swapping their values via prefers-color-scheme
+ * automatically rethemes every utility (bg-cream, text-navy, etc.)
+ * without needing a refactor.
+ *
+ * Naming note: the class names (text-navy, bg-cream, …) describe their
+ * light-mode role. In dark mode they swap to their semantically
+ * equivalent dark-theme value — text-navy becomes eggshell text,
+ * bg-cream becomes deep-navy surface. The class name lies a little in
+ * dark mode; the trade-off is no component refactor.
  */
 
 :root {
-  /* Palette — never pure white, pure black, or saturated primaries */
-  --cc-cream: #faf3e7;
-  --cc-offwhite: #fffcf5;
-  --cc-navy: #2a3b4d;
-  --cc-charcoal: #3a3a3a;
-  --cc-warm-gray: #9c8e7e;
-  --cc-terracotta: #d97757;
-  --cc-mustard: #e8b04b;
-  --cc-sage: #8aa678;
-  --cc-dusty-blue: #6b8cae;
-  --cc-soft-pink: #e8b4b8;
+  color-scheme: light dark;
 
-  /* Semantic */
-  --cc-bg: var(--cc-cream);
-  --cc-surface: var(--cc-offwhite);
-  --cc-ink: var(--cc-navy);
-  --cc-muted: var(--cc-warm-gray);
+  /* ---- Light theme (default) ---- */
+
+  /* Page background and surfaces */
+  --color-cream: #f0ede6;        /* page bg — soft eggshell */
+  --color-offwhite: #fcfaf3;     /* cards, panels — one notch lighter */
+
+  /* Text + outline */
+  --color-navy: #2a3b4d;         /* primary text, outlines */
+  --color-charcoal: #3a3a3a;     /* body copy */
+  --color-warm-gray: #9c8e7e;    /* muted/eyebrow text */
+
+  /* Accents — identity colors, kept across themes */
+  --color-terracotta: #d97757;
+  --color-mustard: #e8b04b;
+  --color-sage: #8aa678;
+  --color-dusty-blue: #6b8cae;
+  --color-soft-pink: #e8b4b8;
 
   /* Outline rule: 2-3px navy, rounded ends */
   --cc-stroke: 2.5px;
 
   /* ---- Layout knobs ----
-   * Change these to retune cosmetics across every page at once.
-   * Section gap = vertical space between item-page sections.
-   * Page max-width = where the content stops growing on wide screens.
-   * Hero size = circular hero illustration diameter on item pages.
-   * Card radius = rounded corner used by panels and cards. */
+   * Change these to retune cosmetics across every page at once. */
   --cc-page-max: 44rem;
   --cc-section-gap: 4rem;
   --cc-section-gap-sm: 2.5rem;
@@ -45,4 +50,32 @@
   /* Paper grain — subtle SVG noise overlay at ~8% opacity.
    * Inline so we don't ship an asset just for this. */
   --cc-paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.23  0 0 0 0 0.30  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --cc-paper-grain-opacity: 0.08;
+  --cc-paper-grain-blend: multiply;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Page background and surfaces flip to deep navy family.
+       Outlines / primary text flip to eggshell so the whole UI inverts
+       without changing class names. */
+    --color-cream: #1b2433;        /* deep navy bg */
+    --color-offwhite: #25324a;     /* surfaces — one notch lighter */
+    --color-navy: #f0ede6;         /* "primary ink" — now eggshell */
+    --color-charcoal: #d8d3c8;     /* body copy — light warm gray */
+    --color-warm-gray: #a99e8e;    /* muted text — brighter for contrast */
+
+    /* Accents brighten a touch so they pop on dark surfaces */
+    --color-terracotta: #e58866;
+    --color-mustard: #f0ba5b;
+    --color-sage: #98b386;
+    --color-dusty-blue: #7e9dbe;
+    --color-soft-pink: #ecc2c5;
+
+    /* Paper grain inverted — eggshell specks on deep navy at lower
+       opacity. Multiply would darken everything; switch to screen. */
+    --cc-paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.94  0 0 0 0 0.92  0 0 0 0 0.85  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    --cc-paper-grain-opacity: 0.05;
+    --cc-paper-grain-blend: screen;
+  }
 }

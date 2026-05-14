@@ -20,6 +20,7 @@ import { StatCard } from "@/components/StatCard";
 import { HistorySection } from "@/components/HistorySection";
 import { UsesGrid } from "@/components/UsesGrid";
 import { DidYouKnow } from "@/components/DidYouKnow";
+import { SourcesSection } from "@/components/SourcesSection";
 import { CabinetDrop } from "@/components/CabinetDrop";
 
 interface PageProps {
@@ -64,6 +65,7 @@ export default async function ItemPage({ params }: PageProps) {
         <HistorySection item={item} />
         <UsesGrid item={item} />
         <DidYouKnow item={item} />
+        <SourcesSection item={item} />
         <CabinetDrop item={item} />
       </div>
     </main>
