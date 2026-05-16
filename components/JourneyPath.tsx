@@ -4,25 +4,28 @@
  * Desktop (sm+): waypoints alternate left/right with a curving navy
  *                dashed line. Reads like a storybook treasure map.
  *
- * Mobile (<sm):  waypoints stack down the left side; a straight dashed
- *                navy line runs through their centers; caption to the
- *                right of each one.
+ * Mobile (<sm):  waypoints stack down the left side; a vertical
+ *                trail runs through their centers.
  *
- * Interaction (Story 4):
- *   Caption + duration are always visible. The detail text lives in a
- *   modal that opens on waypoint tap. The journey reads as a scannable
- *   map; tapping a waypoint dives into the explainer.
+ * Scroll animation:
+ *   Both layouts render TWO paths. The first is the static dashed
+ *   "trail" — always visible at low opacity. The second is an
+ *   accent-coloured solid line drawn on top via motion's pathLength,
+ *   tied to the user's scroll position over the journey container.
+ *   Result: a dotted arrow drawing itself from step 1 to step N as
+ *   the reader scrolls, no clicks required.
  *
  * Cosmetic knobs:
  *   LEFT_X / RIGHT_X      where the curve enters/exits on desktop
  *   ROW_UNITS / CENTER_Y  vertical spacing per waypoint
- *   row min-height       below
+ *   PROGRESS_STROKE_W     thickness of the drawn-on-scroll line
+ *   useScroll offset      below — controls when drawing starts/finishes
  */
 
 "use client";
 
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useScroll } from "motion/react";
 import type { FlowStep, Item } from "@/content/types";
 import { accent } from "@/lib/accent";
 import { cx } from "@/lib/cx";
@@ -38,6 +41,18 @@ const LEFT_X = 18;
 const RIGHT_X = 82;
 const ROW_UNITS = 100;
 const CENTER_Y = 50;
+
+/** Hex values for the per-item accent's "solid" colour. Used inline
+ *  on SVG strokes because @theme tokens via Tailwind classes don't
+ *  reach SVG attributes. Keep in sync with styles/tokens.css. */
+const ACCENT_HEX: Record<Item["accent"], string> = {
+  terracotta: "#D97757",
+  mustard: "#E8B04B",
+  sage: "#8AA678",
+  "dusty-blue": "#6B8CAE",
+  "soft-pink": "#E8B4B8",
+  "warm-gray": "#9C8E7E",
+};
 
 function buildZigzagPath(stepCount: number): string {
   let d = "";
@@ -61,6 +76,22 @@ export function JourneyPath({ item, className }: Props) {
   const n = item.flow.length;
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const openStep = openIdx !== null ? item.flow[openIdx] : null;
+  const accentColor = ACCENT_HEX[item.accent];
+
+  /* Scroll-driven drawing. Start filling when the section top reaches
+   * 70% from viewport top; finish when the section bottom reaches
+   * 30%. These offsets feel natural — drawing keeps pace with reading
+   * without lagging behind or rushing ahead. */
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const mobileRef = useRef<HTMLOListElement>(null);
+  const { scrollYProgress: desktopProgress } = useScroll({
+    target: desktopRef,
+    offset: ["start 75%", "end 35%"],
+  });
+  const { scrollYProgress: mobileProgress } = useScroll({
+    target: mobileRef,
+    offset: ["start 75%", "end 35%"],
+  });
 
   /* Keyboard: Escape closes the popup. */
   useEffect(() => {
@@ -77,23 +108,32 @@ export function JourneyPath({ item, className }: Props) {
       <SectionHeading eyebrow="Where it comes from" title="The journey" />
 
       {/* ---- Mobile (<sm) ---- */}
-      <ol className="relative sm:hidden">
+      <ol ref={mobileRef} className="relative sm:hidden">
         <svg
           aria-hidden="true"
-          className="pointer-events-none absolute left-[2.25rem] top-6 bottom-6 w-0.5"
+          className="pointer-events-none absolute left-[2.25rem] top-6 bottom-6 w-1"
           preserveAspectRatio="none"
           viewBox="0 0 2 100"
         >
-          <line
-            x1="1"
-            y1="0"
-            x2="1"
-            y2="100"
-            stroke="#2A3B4D"
-            strokeOpacity="0.35"
-            strokeWidth="0.5"
+          {/* Static dashed trail */}
+          <path
+            d="M 1 0 L 1 100"
+            fill="none"
+            stroke="currentColor"
+            strokeOpacity="0.28"
+            strokeWidth="0.45"
             strokeDasharray="2 2"
             strokeLinecap="round"
+            className="text-navy"
+          />
+          {/* Scroll-driven drawn line on top */}
+          <motion.path
+            d="M 1 0 L 1 100"
+            fill="none"
+            stroke={accentColor}
+            strokeWidth="0.7"
+            strokeLinecap="round"
+            style={{ pathLength: mobileProgress }}
           />
         </svg>
 
@@ -114,21 +154,32 @@ export function JourneyPath({ item, className }: Props) {
       </ol>
 
       {/* ---- Desktop (sm+) ---- */}
-      <div className="relative hidden sm:block">
+      <div ref={desktopRef} className="relative hidden sm:block">
         <svg
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 h-full w-full"
           preserveAspectRatio="none"
           viewBox={`0 0 100 ${n * ROW_UNITS}`}
         >
+          {/* Static dashed trail */}
           <path
             d={buildZigzagPath(n)}
             fill="none"
-            stroke="#2A3B4D"
-            strokeOpacity="0.32"
+            stroke="currentColor"
+            strokeOpacity="0.28"
             strokeWidth="0.55"
             strokeDasharray="2.4 2.4"
             strokeLinecap="round"
+            className="text-navy"
+          />
+          {/* Scroll-driven drawn line on top */}
+          <motion.path
+            d={buildZigzagPath(n)}
+            fill="none"
+            stroke={accentColor}
+            strokeWidth="0.85"
+            strokeLinecap="round"
+            style={{ pathLength: desktopProgress }}
           />
         </svg>
 

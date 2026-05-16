@@ -83,27 +83,24 @@ h3 {
   }
 }
 
-/* ---- World morph transition ----
+/* ---- View transitions ----
  *
- * When a WorldCard is tapped, the browser morphs that card's preview
- * (style={{ viewTransitionName: `world-<slug>` }}) into the matching
- * SceneStage on the next page (same viewTransitionName). Reverses on
- * Home. Next.js fires this automatically once experimental.viewTransition
- * is enabled in next.config.ts.
+ * Next.js fires the View Transitions API automatically once
+ * experimental.viewTransition is set in next.config.ts. Any element
+ * with a `view-transition-name` that exists on both pages gets
+ * morphed between its positions.
  *
- * 450ms is slow enough to register the morph but fast enough to feel
- * direct. The mid-flight blur masks pixel-level interpolation
- * artifacts during the size change.
+ * The WorldCard preview and the SceneStage carry matching names
+ * (`world-<slug>`), so the browser morphs the card into the full
+ * stage when the user navigates. Reverses on Home tap.
  *
- * Wildcard selectors match any name starting with "world-" so we
- * don't have to list every scene by hand.
+ * One global timing is fine — the only paired-name transitions in
+ * this app are the world morphs; everything else falls back to the
+ * default root crossfade. 450ms is slow enough to register the
+ * morph but fast enough to feel direct. The mid-flight blur masks
+ * pixel-level interpolation artifacts during the size change.
  */
 ::view-transition-group(*) {
-  animation-duration: 280ms;
-  animation-timing-function: ease-out;
-}
-::view-transition-group(*[name^="world-"]),
-[style*="view-transition-name: world-"] {
   animation-duration: 450ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
