@@ -122,8 +122,8 @@ function LiveHotspot({ item }: { item: Item }) {
         </span>
       )}
 
-      {/* Name label under the hotspot */}
-      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-navy/15 bg-offwhite px-2.5 py-0.5 font-body text-xs font-semibold text-navy opacity-0 shadow-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+      {/* Always-on name label under the hotspot */}
+      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-display text-xs font-semibold tracking-[0.02em] text-navy sm:text-sm">
         {item.name}
       </span>
     </Link>
@@ -141,7 +141,7 @@ function ComingSoonHotspot({ name }: { name: string }) {
           soon
         </span>
       </span>
-      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-body text-xs font-medium text-warm-gray/80">
+      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-display text-xs font-semibold tracking-[0.02em] text-warm-gray/80 sm:text-sm">
         {name}
       </span>
     </div>
