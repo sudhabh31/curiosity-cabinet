@@ -21,6 +21,7 @@ import { UsesGrid } from "@/components/UsesGrid";
 import { DidYouKnow } from "@/components/DidYouKnow";
 import { SourcesSection } from "@/components/SourcesSection";
 import { CabinetDrop } from "@/components/CabinetDrop";
+import { BackToScene } from "@/components/BackToScene";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -46,7 +47,8 @@ export default async function ItemPage({ params }: PageProps) {
   if (!item) notFound();
 
   return (
-    <main className="relative z-10 mx-auto w-full max-w-[var(--cc-page-max)] px-5 pb-24 pt-20 sm:px-8 sm:pt-24">
+    <main className="relative z-10 mx-auto w-full max-w-[var(--cc-page-max)] px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      <BackToScene itemSlug={item.slug} />
       <div className="flex flex-col gap-[var(--cc-section-gap-sm)] sm:gap-[var(--cc-section-gap)]">
         <ItemHero item={item} />
         <JourneyPath item={item} />

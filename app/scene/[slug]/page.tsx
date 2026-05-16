@@ -57,7 +57,12 @@ export default async function ScenePage({ params }: PageProps) {
         </p>
       </header>
 
-      <SceneStage scene={scene} backdrop={backdropFor(scene.slug)} />
+      {/* viewTransitionName matches the WorldCard preview's name, so
+          the browser morphs the card into this full stage on entry,
+          and reverses on Home. */}
+      <div style={{ viewTransitionName: `world-${scene.slug}` }}>
+        <SceneStage scene={scene} backdrop={backdropFor(scene.slug)} />
+      </div>
     </main>
   );
 }

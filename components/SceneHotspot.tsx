@@ -122,8 +122,10 @@ function LiveHotspot({ item }: { item: Item }) {
         </span>
       )}
 
-      {/* Always-on name label under the hotspot */}
-      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-display text-xs font-semibold tracking-[0.02em] text-navy sm:text-sm">
+      {/* Always-on name label under the hotspot. Wrapped in an offwhite
+          pill with a navy border so it stays legible against the wood
+          backdrop, where plain navy text reads as low contrast. */}
+      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-navy/30 bg-offwhite px-2.5 py-0.5 font-display text-xs font-semibold tracking-[0.02em] text-navy shadow-sm sm:text-sm">
         {item.name}
       </span>
     </Link>
@@ -141,7 +143,7 @@ function ComingSoonHotspot({ name }: { name: string }) {
           soon
         </span>
       </span>
-      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-display text-xs font-semibold tracking-[0.02em] text-warm-gray/80 sm:text-sm">
+      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-navy/20 bg-offwhite/85 px-2.5 py-0.5 font-display text-xs font-semibold tracking-[0.02em] text-warm-gray shadow-sm sm:text-sm">
         {name}
       </span>
     </div>

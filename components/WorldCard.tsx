@@ -49,8 +49,13 @@ function LiveCard({ world, preview, className }: Props) {
         className,
       )}
     >
-      {/* Preview panel */}
-      <div className="aspect-[5/3] w-full overflow-hidden rounded-t-[calc(var(--cc-card-radius)-2px)] bg-cream">
+      {/* Preview panel — tagged with a viewTransitionName matching
+          the scene's SceneStage. When the user navigates, the browser
+          morphs this card into the full stage on the next page. */}
+      <div
+        className="aspect-[5/3] w-full overflow-hidden rounded-t-[calc(var(--cc-card-radius)-2px)] bg-cream"
+        style={{ viewTransitionName: `world-${world.slug}` }}
+      >
         {preview}
       </div>
 

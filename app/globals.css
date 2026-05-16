@@ -74,6 +74,46 @@ h3 {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+  /* View transitions also need their own muting */
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ---- World morph transition ----
+ *
+ * When a WorldCard is tapped, the browser morphs that card's preview
+ * (style={{ viewTransitionName: `world-<slug>` }}) into the matching
+ * SceneStage on the next page (same viewTransitionName). Reverses on
+ * Home. Next.js fires this automatically once experimental.viewTransition
+ * is enabled in next.config.ts.
+ *
+ * 450ms is slow enough to register the morph but fast enough to feel
+ * direct. The mid-flight blur masks pixel-level interpolation
+ * artifacts during the size change.
+ *
+ * Wildcard selectors match any name starting with "world-" so we
+ * don't have to list every scene by hand.
+ */
+::view-transition-group(*) {
+  animation-duration: 280ms;
+  animation-timing-function: ease-out;
+}
+::view-transition-group(*[name^="world-"]),
+[style*="view-transition-name: world-"] {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-image-pair(*) {
+  animation-name: cc-via-blur;
+}
+@keyframes cc-via-blur {
+  30% {
+    filter: blur(2px);
+  }
 }
 
 /* ---- Hidden global SVG defs ----
