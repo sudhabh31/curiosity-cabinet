@@ -7,7 +7,6 @@
  */
 
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { getScene, listSceneSlugs } from "@/content/scenes";
 import { SceneStage } from "@/components/SceneStage";
 import { BreakfastTableBackdrop } from "@/components/illustrations/breakfast-table";
@@ -45,17 +44,7 @@ export default async function ScenePage({ params }: PageProps) {
   if (!scene) notFound();
 
   return (
-    <main className="relative z-10 mx-auto w-full max-w-5xl px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      <nav className="mb-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1 font-body text-sm font-medium text-warm-gray transition-colors hover:text-navy"
-        >
-          <span aria-hidden>←</span>
-          Home
-        </Link>
-      </nav>
-
+    <main className="relative z-10 mx-auto w-full max-w-5xl px-5 pb-24 pt-20 sm:px-8 sm:pt-24">
       <header className="mb-8 text-center sm:mb-10">
         <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-warm-gray">
           A scene

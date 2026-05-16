@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Nunito } from "next/font/google";
 import { CabinetBadge } from "@/components/CabinetBadge";
+import { HomeBadge } from "@/components/HomeBadge";
 import { SvgFilters } from "@/components/SvgFilters";
 import "./globals.css";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <SvgFilters />
         {children}
+        <HomeBadge />
         <CabinetBadge />
       </body>
     </html>

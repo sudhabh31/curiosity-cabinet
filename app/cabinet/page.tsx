@@ -8,7 +8,6 @@
 
 "use client";
 
-import Link from "next/link";
 import { useMemo } from "react";
 import { items } from "@/content/items";
 import { useCabinet } from "@/lib/cabinet";
@@ -30,17 +29,7 @@ export default function CabinetPage() {
   const collectedCount = slugs.length;
 
   return (
-    <main className="relative z-10 mx-auto w-full max-w-4xl px-5 pb-24 pt-10 sm:px-8 sm:pt-16">
-      <nav className="mb-8">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1 font-body text-sm font-medium text-warm-gray transition-colors hover:text-navy"
-        >
-          <span aria-hidden>←</span>
-          Home
-        </Link>
-      </nav>
-
+    <main className="relative z-10 mx-auto w-full max-w-4xl px-5 pb-24 pt-20 sm:px-8 sm:pt-24">
       <header className="mb-10 text-center sm:mb-12">
         <p className="font-body text-xs font-semibold uppercase tracking-[0.22em] text-warm-gray">
           Your collection
