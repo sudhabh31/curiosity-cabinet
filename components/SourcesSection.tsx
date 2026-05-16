@@ -1,8 +1,9 @@
 /**
- * Sources — "Where this comes from" links at the bottom of an item.
+ * Sources — "Dig deeper" links at the bottom of an item.
  *
- * Quiet, parent-facing section: small type, simple list, external-link
- * indicator on each link. Skipped entirely if the item has no sources.
+ * Simple list of external references. External-link indicator on each
+ * link; opens in a new tab. Skipped entirely if the item has no
+ * sources.
  */
 
 import type { Item } from "@/content/types";
@@ -18,10 +19,7 @@ export function SourcesSection({ item, className }: Props) {
   if (!item.sources || item.sources.length === 0) return null;
   return (
     <section className={cx(className)}>
-      <SectionHeading
-        eyebrow="For the curious adult"
-        title="Where this comes from"
-      />
+      <SectionHeading title="Dig deeper" />
       <ul className="space-y-2.5">
         {item.sources.map((s) => (
           <li key={s.url}>
@@ -55,10 +53,6 @@ export function SourcesSection({ item, className }: Props) {
           </li>
         ))}
       </ul>
-      <p className="mt-4 font-body text-xs text-warm-gray">
-        Links open in a new tab. We&rsquo;re not affiliated with any of these &mdash;
-        they&rsquo;re just where we&rsquo;d send a curious grown-up.
-      </p>
     </section>
   );
 }

@@ -2,28 +2,31 @@
  * SceneHotspot — a positioned, animated item button on a scene.
  *
  * Two flavours via the `kind` prop:
- *   - live: links to /item/<slug>, shows the item's hero SVG inside a
- *           tinted ring; wiggles gently with a per-item delay; lifts +
- *           glows on hover; shows a small ✓ badge if collected.
- *   - coming-soon: greyed out, non-clickable, tiny "soon" label.
+ *   - live: links to /item/<slug>; navy-outlined offwhite circle with
+ *           the item's illustration inside; gently wiggles; lifts on
+ *           hover; shows a sage ✓ if collected.
+ *   - coming-soon: dashed warm-gray circle, non-clickable.
+ *
+ * Visual contract: offwhite (not tinted by accent) so items pop against
+ * the wood backdrop. The illustration carries the colour, the container
+ * stays neutral.
  *
  * Cosmetic knobs:
- *   --hotspot-scale  set inline from scene data
- *   wiggle range & duration  below in MOTION
+ *   WIGGLE_RANGE / WIGGLE_DURATION  motion config
+ *   --hotspot-scale                 set inline from scene data
  */
 
 "use client";
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import type { Item, PaletteRole } from "@/content/types";
-import { accent } from "@/lib/accent";
+import type { Item } from "@/content/types";
 import { useCabinet } from "@/lib/cabinet";
 import { cx } from "@/lib/cx";
 import { getHeroIllustration } from "./illustrations";
 
-const WIGGLE_RANGE = 2.2; // degrees
-const WIGGLE_DURATION = 5.2; // seconds (one full cycle)
+const WIGGLE_RANGE = 1.6; // degrees — gentler than v1
+const WIGGLE_DURATION = 6; // seconds (one full cycle)
 
 interface LiveProps {
   kind: "live";
@@ -49,7 +52,7 @@ export function SceneHotspot(props: Props) {
   const { x, y, scale, wiggleDelay } = props;
 
   /* Position via percent (matches the data model) and size via
-     CSS calc on the container width so we scale with the stage. */
+     percent of the stage so hotspots scale with the container. */
   const positionStyle: React.CSSProperties = {
     left: `${x}%`,
     top: `${y}%`,
@@ -80,35 +83,23 @@ export function SceneHotspot(props: Props) {
 function LiveHotspot({ item }: { item: Item }) {
   const { slugs } = useCabinet();
   const collected = slugs.includes(item.slug);
-  const a = accent(item.accent as PaletteRole);
 
   return (
     <Link
       href={`/item/${item.slug}`}
       aria-label={`${item.name} — explore`}
       className={cx(
-        "group relative block aspect-square w-full rounded-full border-[2.5px] border-navy",
-        "shadow-[0_8px_22px_-14px_rgba(42,59,77,0.7)]",
+        "group relative block aspect-square w-full rounded-full border-[2.5px] border-navy bg-offwhite",
+        "shadow-[0_10px_22px_-14px_rgba(42,59,77,0.7)]",
         "transition-transform duration-200 ease-out",
-        "hover:-translate-y-1 hover:shadow-[0_14px_28px_-14px_rgba(42,59,77,0.85)]",
+        "hover:-translate-y-1 hover:shadow-[0_16px_30px_-14px_rgba(42,59,77,0.85)]",
         "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-navy/25",
-        a.tintBg,
       )}
     >
-      {/* Soft inner halo on hover */}
-      <span
-        className={cx(
-          "pointer-events-none absolute -inset-1 rounded-full opacity-0 transition-opacity duration-200",
-          "group-hover:opacity-70 group-focus-visible:opacity-70",
-          a.tintBg,
-        )}
-        aria-hidden
-      />
-
       {/* Illustration */}
-      <span className="absolute inset-[14%] flex items-center justify-center">
+      <span className="absolute inset-[16%] flex items-center justify-center">
         {getHeroIllustration(item.slug) ?? (
-          <span className={cx("h-full w-full rounded-full", a.solidBg)} />
+          <span className="h-full w-full rounded-full bg-warm-gray opacity-30" />
         )}
       </span>
 
@@ -132,7 +123,7 @@ function LiveHotspot({ item }: { item: Item }) {
       )}
 
       {/* Name label under the hotspot */}
-      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full bg-offwhite/90 px-2 py-0.5 font-body text-xs font-semibold text-navy opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+      <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-full border border-navy/15 bg-offwhite px-2.5 py-0.5 font-body text-xs font-semibold text-navy opacity-0 shadow-sm transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
         {item.name}
       </span>
     </Link>
@@ -142,7 +133,7 @@ function LiveHotspot({ item }: { item: Item }) {
 function ComingSoonHotspot({ name }: { name: string }) {
   return (
     <div
-      className="relative block aspect-square w-full rounded-full border-[2px] border-dashed border-warm-gray/70 bg-cream/70"
+      className="relative block aspect-square w-full rounded-full border-[2px] border-dashed border-navy/40 bg-offwhite/60"
       aria-label={`${name} — coming soon`}
     >
       <span className="absolute inset-0 flex items-center justify-center">
