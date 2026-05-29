@@ -37,8 +37,19 @@ interface Props {
   className?: string;
 }
 
-const LEFT_X = 18;
-const RIGHT_X = 82;
+/* Path geometry, in viewBox units (0–100 horizontal).
+ *
+ * The waypoint sits at the inner edge of its grid column, with the
+ * caption text filling the rest of that column outward. So the path
+ * must NOT swing all the way out to the column edges — it would cross
+ * the caption text on its arc. Instead, anchor the path's left/right
+ * extremes just inside where the waypoint touches centre, so the
+ * curve lives in the narrow gutter between the two columns of text.
+ *
+ * 38/62 = 24 unit gutter, wide enough to read as a flowing path but
+ * narrow enough that it never crosses caption text. */
+const LEFT_X = 38;
+const RIGHT_X = 62;
 const ROW_UNITS = 100;
 const CENTER_Y = 50;
 
